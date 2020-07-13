@@ -1,6 +1,5 @@
 package com.gerenciadordepedido.model;
 
-import java.util.Date;
 import java.util.List;
 
 public class PedidoDTO {	
@@ -8,7 +7,7 @@ public class PedidoDTO {
 	private Integer id;		
 	private Cliente cliente;	
 	private String totalCompra;	
-	private Date dataCompra;	
+	private String dataCompra;	
 	private List<Produto> produtos;
 
 	public Integer getId() {
@@ -35,11 +34,11 @@ public class PedidoDTO {
 		this.totalCompra = totalCompra;
 	}
 
-	public Date getDataCompra() {
+	public String getDataCompra() {
 		return dataCompra;
 	}
 
-	public void setDataCompra(Date dataCompra) {
+	public void setDataCompra(String dataCompra) {
 		this.dataCompra = dataCompra;
 	}
 

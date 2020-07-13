@@ -19,12 +19,18 @@ public class Pedido {
 	@Column(name = "pedidoID")
 	private Integer id;
 	
-	@Column(name = "totalCompra")
-	@NotNull
-	private String totalCompra;
+	@Column(name = "clienteID")
+	private Integer clienteID;
 	
-	@Column(name = "dataCompra")
-	private Date dataCompra;	
+	@Column(name = "produtoID")
+	private Integer produtoID;
+	
+	@Column(name = "totalDaCompra")
+	@NotNull
+	private String totalDaCompra;
+	
+	@Column(name = "dataDaCompra")
+	private Date dataDaCompra;
 
 	public Integer getId() {
 		return id;
@@ -34,19 +40,35 @@ public class Pedido {
 		this.id = id;
 	}
 
-	public String getTotalCompra() {
-		return totalCompra;
+	public Integer getClienteID() {
+		return clienteID;
 	}
 
-	public void setTotalCompra(String totalCompra) {
-		this.totalCompra = totalCompra;
+	public void setClienteID(Integer clienteID) {
+		this.clienteID = clienteID;
 	}
 
-	public Date getDataCompra() {
-		return dataCompra;
+	public Integer getProdutoID() {
+		return produtoID;
 	}
 
-	public void setDataCompra(Date dataCompra) {
-		this.dataCompra = dataCompra;
+	public void setProdutoID(Integer produtoID) {
+		this.produtoID = produtoID;
 	}
+
+	public String getTotalDaCompra() {
+		return totalDaCompra;
+	}
+
+	public void setTotalDaCompra(String totalDaCompra) {
+		this.totalDaCompra = totalDaCompra;
+	}
+
+	public Date getDataDaCompra() {
+		return dataDaCompra;
+	}
+
+	public void setDataDaCompra(Date dataDaCompra) {
+		this.dataDaCompra = dataDaCompra;
+	}	
 }
