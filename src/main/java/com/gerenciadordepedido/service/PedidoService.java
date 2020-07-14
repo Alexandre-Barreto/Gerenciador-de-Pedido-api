@@ -2,7 +2,6 @@ package com.gerenciadordepedido.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,18 +48,39 @@ public class PedidoService {
 		String[] novoSku = sku.split(",");		
 		
 		for (int i = 0; i < novoSku.length; i++) {
-			produtos.add(pedidoRepository.findProdutoBySku(sku));
+			produtos.add(pedidoRepository.findProdutoBySku(novoSku[i]));
 		}
 		pedido.setProdutos(produtos);
-		Integer preco = Integer.parseInt(produtos.get(0).getPreco());
 		
-		for (int i = 1; i < produtos.size(); i++) {
-			int valor =Integer.parseInt(produtos.get(i).getPreco());
-			String valorFinal = Integer.toString(preco+valor);
-			pedido.setTotalCompra(valorFinal);
+		if (produtos.size() == 1) {
+			pedido.setTotalCompra(produtos.get(0).getPreco());
+			return pedido;
 		}
 		
+		Integer preco = this.stringToInt(produtos.get(0).getPreco());
+		for (int i = 1; i < produtos.size(); i++) {
+			String valorFinal = intToString(preco+ this.stringToInt(produtos.get(i).getPreco()));
+			pedido.setTotalCompra(valorFinal);
+		}		
 		return pedido;
 	}
+	
+	private Integer stringToInt(String numero) {
+		numero = numero.substring(0, numero.length() -1).substring(0, numero.length() -2);
+		numero = numero.replaceAll("[^0-9]", "");
+		Integer preco = Integer.parseInt(numero);
+		return preco;
+	}
+	
+	private String intToString(Integer numero) {
+		String valor = Integer.toString(numero);
+		StringBuilder sb = new StringBuilder(valor);
+        for (int i = sb.length() -3; i > 0; i -= 3) {
+			sb.insert(i, ".");
+		}
+        sb.insert(sb.length(), ",00");
+		return sb.toString();
+	}
+
 
 }
