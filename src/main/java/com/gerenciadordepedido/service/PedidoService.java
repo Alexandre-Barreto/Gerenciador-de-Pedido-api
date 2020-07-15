@@ -1,12 +1,12 @@
 package com.gerenciadordepedido.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gerenciadordepedido.model.Cliente;
 import com.gerenciadordepedido.model.Pedido;
 import com.gerenciadordepedido.model.PedidoDTO;
 import com.gerenciadordepedido.model.Produto;
@@ -37,9 +37,18 @@ public class PedidoService {
 		return listaPedidos;
 	}
 
-	public Cliente save(Pedido pedido) {
+	public PedidoDTO save(PedidoDTO pedidoDTO) {
+		Pedido pedido = new Pedido();
+		Date data = new Date(System.currentTimeMillis());
+		for (int i = 0; i < pedidoDTO.getProdutos().size(); i++) {
+			pedido.setDataDaCompra(data);
+			pedido.setClienteID(pedidoDTO.getCliente().getId());
+			pedido.setTotalDaCompra(pedidoDTO.getTotalCompra());
+			pedido.setProdutoID(pedidoDTO.getProdutos().get(i).getId());
+			pedidoRepository.save(pedido);
+		}
 		
-		return null;
+		return pedidoDTO;
 	}
 
 	public PedidoDTO buscarPedidoProduto(String sku) {
