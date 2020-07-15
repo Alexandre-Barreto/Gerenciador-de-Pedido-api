@@ -37,7 +37,7 @@ public class PedidoService {
 		return listaPedidos;
 	}
 
-	public PedidoDTO save(PedidoDTO pedidoDTO) {
+	public Pedido save(PedidoDTO pedidoDTO) {
 		Pedido pedido = new Pedido();
 		Date data = new Date(System.currentTimeMillis());
 		for (int i = 0; i < pedidoDTO.getProdutos().size(); i++) {
@@ -48,7 +48,7 @@ public class PedidoService {
 			pedidoRepository.save(pedido);
 		}
 		
-		return pedidoDTO;
+		return pedido;
 	}
 
 	public PedidoDTO buscarPedidoProduto(String sku) {
@@ -90,6 +90,5 @@ public class PedidoService {
         sb.insert(sb.length(), ",00");
 		return sb.toString();
 	}
-
 
 }
