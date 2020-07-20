@@ -50,7 +50,7 @@ public class PedidoController {
 	@GetMapping("/cliente/{cpf}")
 	public ResponseEntity<Cliente> buscarClienteId(@PathVariable String cpf) {
 		Optional<Cliente> cliente = pedidoRepository.findClienteByCpf(cpf);
-		if (!cliente.isPresent()) {
+		if (cliente.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(cliente.get());

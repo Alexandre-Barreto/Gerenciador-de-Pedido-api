@@ -37,7 +37,7 @@ public class ClienteController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<Cliente> save(@Validated @RequestBody Cliente cliente) {
 		Optional<Cliente> clienteByCPF = clienteRepository.clienteExistByCpf(cliente.getCpf());
-		if(!clienteByCPF.isPresent()) {
+		if(clienteByCPF.isEmpty()) {
 			return ResponseEntity.badRequest().build();
 		}	
 		clienteRepository.save(cliente);
