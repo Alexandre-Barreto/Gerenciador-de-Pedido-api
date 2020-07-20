@@ -26,4 +26,10 @@ public interface PedidoRepository extends JpaRepository<Pedido,Integer>{
 	@Query("SELECT p FROM Produto p WHERE p.sku = :sku")
 	public Produto findProdutoBySku(String sku);
 	
+	@Query("SELECT pc FROM Pedido pc WHERE pc.clienteID = :id")
+	public List<Pedido> findAllByClienteID(Integer id);
+	
+	@Query("SELECT pp FROM Pedido pp WHERE pp.produtoID = :id")
+	public List<Pedido> findAllByProdutoID(Integer id);
+	
 }

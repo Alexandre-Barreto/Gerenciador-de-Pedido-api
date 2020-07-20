@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gerenciadordepedido.model.Produto;
 import com.gerenciadordepedido.repository.ProdutoRepository;
+import com.gerenciadordepedido.service.ProdutoService;
 
 @RestController
 @RequestMapping("/produto")
@@ -26,6 +27,9 @@ public class ProdutoController {
 	
 	@Autowired
 	private ProdutoRepository produtoRepository;
+	
+	@Autowired
+	private ProdutoService produtoService;
 
 	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping
@@ -46,7 +50,7 @@ public class ProdutoController {
 		if (!produtoRepository.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		produtoRepository.deleteById(id);
+		produtoService.delete(id);
 		return ResponseEntity.noContent().build();
 
 	}

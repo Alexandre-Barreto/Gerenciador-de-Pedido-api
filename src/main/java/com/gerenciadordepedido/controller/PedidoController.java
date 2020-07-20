@@ -50,10 +50,10 @@ public class PedidoController {
 	@GetMapping("/cliente/{cpf}")
 	public ResponseEntity<Cliente> buscarClienteId(@PathVariable String cpf) {
 		Optional<Cliente> cliente = pedidoRepository.findClienteByCpf(cpf);
-		if (cliente.isPresent()) {
-			return ResponseEntity.ok(cliente.get());
+		if (!cliente.isPresent()) {
+			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.notFound().build();
+		return ResponseEntity.ok(cliente.get());
 	}
 	
 	@CrossOrigin(origins = "http://localhost:4200")

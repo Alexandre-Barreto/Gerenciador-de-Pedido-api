@@ -1,6 +1,8 @@
 package com.gerenciadordepedido.controller;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.gerenciadordepedido.model.Cliente;
 import com.gerenciadordepedido.repository.ClienteRepository;
+import com.gerenciadordepedido.service.ClienteService;
 
 @RestController
 @RequestMapping("/cliente")
@@ -24,12 +27,21 @@ public class ClienteController {
 
 	@Autowired
 	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private ClienteService clienteService;
+	
 
 	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Cliente save(@Validated @RequestBody Cliente cliente) {
-		return clienteRepository.save(cliente);
+	public ResponseEntity<Cliente> save(@Validated @RequestBody Cliente cliente) {
+		Optional<Cliente> clienteByCPF = clienteRepository.clienteExistByCpf(cliente.getCpf());
+		if(!clienteByCPF.isPresent()) {
+			return ResponseEntity.badRequest().build();
+		}	
+		clienteRepository.save(cliente);
+		return ResponseEntity.ok(cliente);
 	}
 
 	@CrossOrigin(origins = "http://localhost:4200")
@@ -44,7 +56,7 @@ public class ClienteController {
 		if (!clienteRepository.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		clienteRepository.deleteById(id);
+		clienteService.delete(id);
 		return ResponseEntity.noContent().build();
 
 	}
@@ -52,10 +64,14 @@ public class ClienteController {
 	@CrossOrigin(origins = "http://localhost:4200")
 	@PutMapping("/{id}")
 	public ResponseEntity<Cliente> update(@Validated @RequestBody Cliente cliente, @PathVariable Integer id) {
-		if (!clienteRepository.existsById(id)) {
+	if (!clienteRepository.existsById(id)) {
 			return ResponseEntity.notFound().build();
-		}
-		clienteRepository.deleteById(id);
+	}
+	
+	if(clienteRepository.clienteExistByCpf(cliente.getCpf()) != null) {
+		return ResponseEntity.badRequest().build();
+	}	
+		cliente.setId(id);
 		clienteRepository.save(cliente);
 		return ResponseEntity.ok(cliente);
 	}
