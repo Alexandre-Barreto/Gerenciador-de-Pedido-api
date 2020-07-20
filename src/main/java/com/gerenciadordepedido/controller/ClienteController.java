@@ -67,8 +67,8 @@ public class ClienteController {
 	if (!clienteRepository.existsById(id)) {
 			return ResponseEntity.notFound().build();
 	}
-	
-	if(clienteRepository.clienteExistByCpf(cliente.getCpf()) != null) {
+	Optional<Cliente> clienteExistByCpf = clienteRepository.clienteExistByCpf(cliente.getCpf());
+	if(clienteExistByCpf.isEmpty()) {
 		return ResponseEntity.badRequest().build();
 	}	
 		cliente.setId(id);

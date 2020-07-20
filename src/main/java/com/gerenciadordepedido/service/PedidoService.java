@@ -20,8 +20,8 @@ public class PedidoService {
 	
 	public List<PedidoDTO> listarPedidos(){
 		List<Pedido> pedidos = pedidoRepository.findAll();
-		List<PedidoDTO> listaPedidos = new ArrayList<PedidoDTO>();
-		Pedido pedido = new Pedido();
+		List<PedidoDTO> listaPedidos = new ArrayList<>();
+		Pedido pedido;
 
 		for (int i = 0; i < pedidos.size(); i++) {
 			PedidoDTO pedidoDTO = new PedidoDTO();
@@ -52,7 +52,7 @@ public class PedidoService {
 	}
 
 	public PedidoDTO buscarPedidoProduto(String sku) {
-		List <Produto> produtos = new ArrayList<Produto>();
+		List <Produto> produtos = new ArrayList<>();
 		PedidoDTO pedido = new PedidoDTO();
 		String[] novoSku = sku.split(",");		
 		
@@ -77,8 +77,7 @@ public class PedidoService {
 	private Integer stringToInt(String numero) {
 		numero = numero.substring(0, numero.length() -1).substring(0, numero.length() -2);
 		numero = numero.replaceAll("[^0-9]", "");
-		Integer preco = Integer.parseInt(numero);
-		return preco;
+		return Integer.parseInt(numero);
 	}
 	
 	private String intToString(Integer numero) {
