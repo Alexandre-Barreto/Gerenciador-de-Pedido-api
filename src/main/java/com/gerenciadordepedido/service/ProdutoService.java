@@ -24,6 +24,6 @@ public class ProdutoService {
 			pedidoRepository.deleteById(pedidos.get(i).getId());
 		}
 		produtoRepository.deleteById(id);
-	}
+	}	
 
 }

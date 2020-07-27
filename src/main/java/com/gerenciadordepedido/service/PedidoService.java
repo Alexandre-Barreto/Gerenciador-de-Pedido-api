@@ -60,13 +60,13 @@ public class PedidoService {
 			produtos.add(pedidoRepository.findProdutoBySku(novoSku[i]));
 		}
 		pedido.setProdutos(produtos);
+		Integer preco = this.stringToInt(produtos.get(0).getPreco());
 		
 		if (produtos.size() == 1) {
-			pedido.setTotalCompra(produtos.get(0).getPreco());
+			pedido.setTotalCompra(this.intToString(preco));
 			return pedido;
 		}
 		
-		Integer preco = this.stringToInt(produtos.get(0).getPreco());
 		for (int i = 1; i < produtos.size(); i++) {
 			String valorFinal = intToString(preco+ this.stringToInt(produtos.get(i).getPreco()));
 			pedido.setTotalCompra(valorFinal);
@@ -75,7 +75,6 @@ public class PedidoService {
 	}
 	
 	private Integer stringToInt(String numero) {
-		numero = numero.substring(0, numero.length() -1).substring(0, numero.length() -2);
 		numero = numero.replaceAll("[^0-9]", "");
 		return Integer.parseInt(numero);
 	}
